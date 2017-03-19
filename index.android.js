@@ -12,20 +12,14 @@ import {
   View
 } from 'react-native';
 
+import Price from 'app/components/Price';
+
 export default class NemMonitorRN extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <Price currency="BTC" amount={123.00}/>
+        <Price currency="USD" amount={321.01}/>
       </View>
     );
   }
