@@ -9,6 +9,7 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
+  Button,
   View
 } from 'react-native';
 
@@ -18,8 +19,17 @@ export default class NemMonitorRN extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Price currency="BTC" amount={123.00}/>
-        <Price currency="USD" amount={321.01}/>
+        <View style={styles.currencies}>
+          <Price currency="BTC" amount={123.00}/>
+          <Price currency="USD" amount={321.01}/>
+        </View>
+        <View style={styles.buttons}>
+          <Button
+            title="Update"
+            color="green"
+            accessibilityLabel="Reload data from server"
+          />
+        </View>
       </View>
     );
   }
@@ -32,15 +42,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'orange',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  currencies: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
+  buttons: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
