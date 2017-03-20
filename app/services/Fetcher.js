@@ -12,8 +12,6 @@ export default class Fetcher {
   static getPrice(cb) {
     axios.all([Fetcher.doPoloniexRequiest(), Fetcher.doBlockchainRequiest()])
       .then(axios.spread((polo, block) => {
-        console.log(polo);
-        console.log(block);
         const nemPriceInBtc = +polo.data.BTC_XEM.last;
         const btcPriceInUsd = +block.data.USD.last;
         const usdPrice = (nemPriceInBtc * btcPriceInUsd).toFixed(3);
