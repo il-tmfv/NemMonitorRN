@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   amount: {
-    fontSize: 64,
+    fontSize: 24,
     paddingRight: 10,
   },
   currency: {
-    fontSize: 62,
+    fontSize: 22,
     textAlign: 'center',
     margin: 10,
   },
