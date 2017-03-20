@@ -16,31 +16,36 @@ import {
 } from 'react-native';
 
 import Price from 'app/components/Price';
+import Fetcher from 'app/services/Fetcher';
 
 export default class NemMonitorRN extends Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false, price: 100.00 }
+    this.state = { loading: false, priceUsd: 0.00, priceBtc: 0 }
+  }
+
+  fetchPrice() {
+    this.setState({ loading: true, price: this.state.price + 1 });
+    Fetcher.getPrice((priceUsd, priceBtc) => this.setState({ priceUsd, priceBtc, loading: false }));
+  }
+
+  componentDidMount() {
+    this.fetchPrice();
   }
 
   onUpdate = () => {
     ToastAndroid.show('Starting to fetch data...', ToastAndroid.SHORT);
-    this.setState({ loading: true, price: this.state.price + 1 });
-    setTimeout(() => {
-      console.log('unclick');
-      this.setState({ loading: false });
-      ToastAndroid.show('Success!', ToastAndroid.SHORT);
-    }, 5000);
+    this.fetchPrice();
   }
 
   render() {
-    const { loading, price } = this.state;
+    const { loading, priceUsd, priceBtc } = this.state;
 
     return (
       <View style={styles.container}>
         <View style={styles.currencies}>
-          <Price currency="BTC" amount={price}/>
-          <Price currency="USD" amount={321.01}/>
+          <Price currency="BTC" amount={priceBtc}/>
+          <Price currency="USD" amount={priceUsd}/>
         </View>
         <View style={styles.buttons}>
           <Button
