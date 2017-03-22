@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export default class Fetcher {
+  
   static doPoloniexRequiest() {
     return axios.get('https://poloniex.com/public?command=returnTicker');
   }
