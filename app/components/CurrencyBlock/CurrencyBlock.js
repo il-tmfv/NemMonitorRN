@@ -18,7 +18,7 @@ class CurrencyBlock extends Component {
 
     return (
       <View style={styles.currencyBlock}>
-          <Text>{currency}</Text>
+          <Text style={styles.header}>{currency}</Text>
           <Price currency="BTC" amount={priceBtc}/>
           <Price currency="USD" amount={priceUsd}/>
       </View>
@@ -27,11 +27,16 @@ class CurrencyBlock extends Component {
 }
 
 const styles = StyleSheet.create({
-  currencurrencyBlockcies: {
-    flex: 1,
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  currencyBlock: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'grey',
+    marginTop: 10,
+    width: '100%',
   },
 });
 

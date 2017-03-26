@@ -20,9 +20,10 @@ export default class Fetcher {
         const result = currencies.map(currency => {
           const currencyPriceInBtc = +polo.data[`BTC_${currency}`].last;
           const currencyPriceInUsd = (currencyPriceInBtc * btcPriceInUsd).toFixed(3);
-          return { currency, currencyPriceInBtc, currencyPriceInUsd };
+          return { currency, currencyPriceInBtc: currencyPriceInBtc.toString(), currencyPriceInUsd };
         });
         appState.currencies = result;
+        appState.loading = false;
       }));
   }
 }

@@ -46,14 +46,16 @@ export default class NemMonitorRN extends Component {
 
     return (
       <View style={styles.container}>
-        {currencies.map((currency, key) => (
-          <CurrencyBlock 
-            currency={currency.currency} 
-            priceBtc={currency.currencyPriceInBtc} 
-            priceUsd={currency.currencyPriceInUsd} 
-            key={key} 
-          />
-        ))}
+        <View style={styles.currencyBlocks}>
+          {currencies.map((currency, key) => (
+            <CurrencyBlock
+              currency={currency.currency}
+              priceBtc={currency.currencyPriceInBtc}
+              priceUsd={currency.currencyPriceInUsd}
+              key={key}
+            />
+          ))}
+        </View>
         <View style={styles.buttons}>
           <Button
             disabled={loading}
@@ -76,8 +78,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'orange',
   },
+  currencyBlocks: {
+    flex: 0.75,
+  },
   buttons: {
-    flex: 1,
+    flex: 0.25,
     justifyContent: 'center',
     alignItems: 'center',
   },
