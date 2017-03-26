@@ -5,6 +5,7 @@
  */
 
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import {
   AppRegistry,
   StyleSheet,
@@ -16,17 +17,19 @@ import {
 } from 'react-native';
 
 import Price from 'app/components/Price';
+import CurrencyBlock from 'app/components/CurrencyBlock';
 import Fetcher from 'app/services/Fetcher';
+import appState from 'app/state/state';
 
+@observer
 export default class NemMonitorRN extends Component {
   constructor(props) {
     super(props);
-    this.state = { loading: false, priceUsd: 0.00, priceBtc: 0 }
   }
 
   fetchPrice() {
-    this.setState({ loading: true, price: this.state.price + 1 });
-    Fetcher.getPrice((priceUsd, priceBtc) => this.setState({ priceUsd, priceBtc, loading: false }));
+    appState.loading = true;
+    Fetcher.getPrice();
   }
 
   componentDidMount() {
@@ -39,14 +42,18 @@ export default class NemMonitorRN extends Component {
   }
 
   render() {
-    const { loading, priceUsd, priceBtc } = this.state;
+    const { currencies, loading } = appState;
 
     return (
       <View style={styles.container}>
-        <View style={styles.currencies}>
-          <Price currency="BTC" amount={priceBtc}/>
-          <Price currency="USD" amount={priceUsd}/>
-        </View>
+        {currencies.map((currency, key) => (
+          <CurrencyBlock 
+            currency={currency.currency} 
+            priceBtc={currency.currencyPriceInBtc} 
+            priceUsd={currency.currencyPriceInUsd} 
+            key={key} 
+          />
+        ))}
         <View style={styles.buttons}>
           <Button
             disabled={loading}
@@ -55,7 +62,7 @@ export default class NemMonitorRN extends Component {
             color="green"
             accessibilityLabel="Reload data from server"
           />
-          <ActivityIndicator animating={loading} size={60}/>
+          <ActivityIndicator animating={loading} size={60} />
         </View>
       </View>
     );
@@ -68,11 +75,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'orange',
-  },
-  currencies: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttons: {
     flex: 1,

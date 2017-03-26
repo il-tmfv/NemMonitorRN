@@ -1,4 +1,7 @@
 import axios from 'axios';
+import appState from 'app/state/state';
+
+const currencies = ['XEM', 'STRAT'];
 
 export default class Fetcher {
   
@@ -10,13 +13,16 @@ export default class Fetcher {
     return axios.get('https://blockchain.info/ticker?cors=true');
   }
 
-  static getPrice(cb) {
+  static getPrice() {
     axios.all([Fetcher.doPoloniexRequiest(), Fetcher.doBlockchainRequiest()])
       .then(axios.spread((polo, block) => {
-        const nemPriceInBtc = +polo.data.BTC_XEM.last;
         const btcPriceInUsd = +block.data.USD.last;
-        const usdPrice = (nemPriceInBtc * btcPriceInUsd).toFixed(3);
-        cb(usdPrice, nemPriceInBtc);
+        const result = currencies.map(currency => {
+          const currencyPriceInBtc = +polo.data[`BTC_${currency}`].last;
+          const currencyPriceInUsd = (currencyPriceInBtc * btcPriceInUsd).toFixed(3);
+          return { currency, currencyPriceInBtc, currencyPriceInUsd };
+        });
+        appState.currencies = result;
       }));
   }
 }
